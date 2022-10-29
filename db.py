@@ -6,8 +6,8 @@ Search = Query()
 
 
 def asciiview():
+    """Вывод всех эементов БД в табличном виде"""
     view = PrettyTable()
-    """Вывод все эементы БД в табличном виде"""
     view.field_names = ['Название', 'Логин', 'Пароль', 'Примечание']
     for i in db:
         view.add_row(list(i.values()))
@@ -34,7 +34,7 @@ def additem(item):
 def removeitem(item):
     """Принимает строку и удаляет элемент с подходящими входными данными"""
     while True:
-        if Search.name == item:
+        if Search.name == item: #Не работает условие присутствия, пересмотреть код
             print('Карточка успешно удалена')
             x = db.get(Search.name == item)
             return db.remove(doc_ids= [x.doc_id])
