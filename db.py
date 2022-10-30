@@ -1,8 +1,29 @@
+import bcrypt
 from tinydb import TinyDB, Query
 from prettytable import PrettyTable
 
 db = TinyDB('db.json')
 Search = Query()
+mpass = db.table('masterpassword')
+salt = bcrypt.gensalt()
+
+
+class Mpass:
+    """Работа с мастер-паролем"""
+
+    def __init__(self, mpswd):
+        """Конструктор"""
+        self.mpassword = mpswd
+
+    def changempass(self):
+        """Изменение мастер-пароля"""
+        mpass.update({'password': self}, Search.name == 'mpass')
+
+    def login(self):
+        if self == list(mpass.get(Search.name == 'mpass').values())[1]:
+            return False
+        else:
+            return True
 
 
 def asciiview():
@@ -12,6 +33,7 @@ def asciiview():
     for i in db:
         view.add_row(list(i.values()))
     print(view)
+
 
 def additem(item):
     """Принимает строку с данными и вносит новый элемент в БД"""
@@ -31,14 +53,16 @@ def additem(item):
     db.update({'notes': notes}, Search.name == item[0])
     return db.insert({'name': item[0], 'login': item[1], 'password': item[2], 'notes': notes})
 
+
 def removeitem(item):
     """Принимает строку и удаляет элемент с подходящими входными данными"""
     while True:
-        if Search.name == item: #Не работает условие присутствия, пересмотреть код
+        if Search.name == item:  # Не работает условие присутствия, пересмотреть код
             print('Карточка успешно удалена')
             x = db.get(Search.name == item)
-            return db.remove(doc_ids= [x.doc_id])
+            return db.remove(doc_ids=[x.doc_id])
             break
         else:
             print('Карточка отсутствует. Проверьте данные')
             break
+
