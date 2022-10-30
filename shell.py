@@ -4,7 +4,7 @@ from db import Mpass
 def shell():
     while True:
         cmd = input('\nВведите одну из команд \n(Д)обавить / (У)далить / (П)осмотреть / [См]енить мастер-пароль / (В)ыход /\n'
-                    '(A)dd / (R)emove / (V)iew / [Ch]ange masterpassword (E)xit: ')
+                    '(A)dd / (R)emove / (V)iew / [Ch]ange masterpassword / (E)xit: ')
         if cmd == '':
             continue
         elif cmd[0].lower() == 'в' or cmd[0].lower() == 'e':
@@ -46,7 +46,7 @@ def shell():
                     continue
                 elif x[0].lower() == 'в' or x[0].lower() == 'e':
                     break
-                elif x == db.showmpass():
+                elif db.Mpass.login(x) is False:
                     Mpass.changempass(input('Введите новый пароль: '))
                     break
                 else:

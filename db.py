@@ -17,11 +17,11 @@ class Mpass:
 
     def changempass(self):
         """Изменение мастер-пароля"""
-        mpass.update({'password': self}, Search.name == 'mpass')
+        mpass.update({'password': str(bcrypt.hashpw(self.encode('utf-8'), salt).decode())}, Search.name == 'mpass')
         print('Мастер-пароль успешно изменен')
 
     def login(self):
-        if self == list(mpass.get(Search.name == 'mpass').values())[1]:
+        if bcrypt.checkpw(self.encode('utf-8'), showmpass().encode('utf-8')):
             return False
         else:
             return True
