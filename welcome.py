@@ -15,5 +15,5 @@ def hello():
         if list(db.mpass.get(db.Search.name == 'mpass').values())[1] == None:
             Mpass.changempass(input('Задайте мастер-пароль: '))
         else:
-            flag = Mpass.login(input('Введите мастер-пароль для входа:'))
+            flag = Mpass.login(input('Введите мастер-пароль для входа: '))
 

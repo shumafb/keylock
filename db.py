@@ -18,13 +18,16 @@ class Mpass:
     def changempass(self):
         """Изменение мастер-пароля"""
         mpass.update({'password': self}, Search.name == 'mpass')
+        print('Мастер-пароль успешно изменен')
 
     def login(self):
         if self == list(mpass.get(Search.name == 'mpass').values())[1]:
             return False
         else:
             return True
-
+        
+def showmpass():
+    return list(mpass.get(Search.name == 'mpass').values())[1]
 
 def asciiview():
     """Вывод всех эементов БД в табличном виде"""
@@ -33,7 +36,6 @@ def asciiview():
     for i in db:
         view.add_row(list(i.values()))
     print(view)
-
 
 def additem(item):
     """Принимает строку с данными и вносит новый элемент в БД"""
@@ -52,7 +54,6 @@ def additem(item):
             print('Введите одну из команд')
     db.update({'notes': notes}, Search.name == item[0])
     return db.insert({'name': item[0], 'login': item[1], 'password': item[2], 'notes': notes})
-
 
 def removeitem(item):
     """Принимает строку и удаляет элемент с подходящими входными данными"""
