@@ -1,10 +1,12 @@
 import db
+import crypt
 from db import Mpass
 
 def shell():
     while True:
-        cmd = input('\nВведите одну из команд \n(Д)обавить / (У)далить / (П)осмотреть / [См]енить мастер-пароль / (В)ыход /\n'
-                    '(A)dd / (R)emove / (V)iew / [Ch]ange masterpassword / (E)xit: ')
+        cmd = input('\nВведите одну из команд:'
+                    '\n(Д)обавить / (У)далить / (П)осмотреть / (Г)енератор пароля / [См]енить мастер-пароль / (В)ыход\n'
+                    '(A)dd / (R)emove / (V)iew / (G)enerate password / [Ch]ange masterpassword / (E)xit: ')
         if cmd == '':
             continue
         elif cmd[0].lower() == 'в' or cmd[0].lower() == 'e':
@@ -12,8 +14,9 @@ def shell():
             exit()
         elif cmd[0].lower() == 'д' or cmd[0].lower() == 'a':
             while True:
-                x = input('Введите данные для добавления:'
-                          ' [Название] [Логин] [Пароль] или (В)ыход / (E)xit для выхода в меню: ')
+                x = input('Введите данные для добавления '
+                          '[Название] [Логин] [Пароль или generate-[количество символов]]\n'
+                          'или (В)ыход / (E)xit: ')
                 if x == '':
                     continue
                 elif x[0].lower() == 'в' or x[0].lower() == 'e':
@@ -28,7 +31,7 @@ def shell():
             db.asciiview()
         elif cmd[0].lower() == 'у' or cmd[0].lower() == 'r':
             while True:
-                x = input('Введите [Название] или (В)ыход / (E)xit для выхода в меню: ')
+                x = input('Введите [Название] или (В)ыход / (E)xit: ')
                 if x == '':
                     continue
                 elif x[0].lower() == 'в' or x[0].lower() == 'e':
@@ -41,7 +44,7 @@ def shell():
                     continue
         elif cmd[:2].lower() == 'см' or cmd[:2].lower() == 'ch':
             while True:
-                x = input('Введите старый мастер-пароль или (В)ыход / (E)xit для выхода в меню: ')
+                x = input('Введите старый мастер-пароль или (В)ыход / (E)xit: ')
                 if x == '':
                     continue
                 elif x[0].lower() == 'в' or x[0].lower() == 'e':
@@ -52,5 +55,7 @@ def shell():
                 else:
                     print('Неправильно введен мастер-пароль')
                     continue
+        elif cmd[0].lower() == 'г' or cmd[0].lower() == 'g':
+            print(crypt.generate(int(input('Введите количество символов: '))))
         else:
             None

@@ -1,4 +1,5 @@
 import bcrypt
+from crypt import generate
 from tinydb import TinyDB, Query
 from prettytable import PrettyTable
 
@@ -53,6 +54,8 @@ def additem(item):
         else:
             print('Введите одну из команд')
     db.update({'notes': notes}, Search.name == item[0])
+    if item[2][:9] == 'generate-':
+        item[2] = generate(int(item[2][item[2].index('-') + 1:]))
     return db.insert({'name': item[0], 'login': item[1], 'password': item[2], 'notes': notes})
 
 def removeitem(item):
