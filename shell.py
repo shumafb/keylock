@@ -5,8 +5,10 @@ from db import Mpass
 def shell():
     while True:
         cmd = input('\nВведите одну из команд:'
-                    '\n(Д)обавить / (У)далить / (П)осмотреть / (Г)енератор пароля / [См]енить мастер-пароль / (В)ыход\n'
-                    '(A)dd / (R)emove / (V)iew / (G)enerate password / [Ch]ange masterpassword / (E)xit: ')
+                    '\n(Д)обавить / (У)далить / (П)осмотреть / (Г)енератор пароля'
+                    ' / [См]енить мастер-пароль / (О)чистить БД / (В)ыход\n'
+                    '(A)dd / (R)emove / (V)iew / (G)enerate password'
+                    ' / [Ch]ange masterpassword / (B)urn DB / (E)xit: ')
         if cmd == '':
             continue
         elif cmd[0].lower() == 'в' or cmd[0].lower() == 'e':
@@ -57,5 +59,18 @@ def shell():
                     continue
         elif cmd[0].lower() == 'г' or cmd[0].lower() == 'g':
             print(crypt.generate(int(input('Введите количество символов: '))))
+        elif cmd[0].lower() == 'о' or cmd[0].lower() == 'b':
+            while True:
+                x = input('Введите мастер-пароль для подтверждения или (В)ыход / (E)xit: ')
+                if x == '':
+                    continue
+                elif x[0].lower() == 'в' or x[0].lower() == 'e':
+                    break
+                elif db.Mpass.login(x) == False:
+                    db.burndb()
+                    break
+                else:
+                    print('Неправильно введен мастер-пароль')
+                    continue
         else:
             None

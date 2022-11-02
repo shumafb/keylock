@@ -70,3 +70,10 @@ def removeitem(item):
             print('Карточка отсутствует. Проверьте данные')
             break
 
+def burndb():
+    """Очищение базы данных"""
+    db.truncate()
+    print('База данных успешно очищена')
+    asciiview()
+
+
