@@ -17,17 +17,17 @@ def shell():
         elif cmd[0].lower() == 'д' or cmd[0].lower() == 'a':
             while True:
                 x = input('Введите данные для добавления '
-                          '[Название] [Логин] [Пароль или generate-[количество символов]]\n'
-                          'или (В)ыход / (E)xit: ')
+                          '[Название] [Логин] [Пароль или generate-[количество символов]]'
+                          ' [Примечание - при необходимости]\n или (В)ыход / (E)xit: ')
                 if x == '':
                     continue
                 elif x[0].lower() == 'в' or x[0].lower() == 'e':
                     break
-                elif len(x.split()) == 3 or len(x.split()) > 3:
+                elif len(x.split()) == 3 or len(x.split()) == 4:
                     db.additem(x)
                     break
-                elif len(x.split()) < 3:
-                    print('Введите элементы карточки')
+                elif len(x.split()) < 3 or len(x.split()) > 4:
+                    print('Ошибка ввода, введите необходимые данные')
                     continue
         elif cmd[0].lower() == 'п' or cmd[0].lower() == 'v':
             db.asciiview()

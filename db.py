@@ -41,22 +41,14 @@ def asciiview():
 def additem(item):
     """Принимает строку с данными и вносит новый элемент в БД"""
     item = item.split()
-    while True:
-        x = input('Хотите добавить примечание? [(Д)а/(Н)ет][(Y)es/(N)o] ')
-        if x[0].lower() == 'д' or x[0].lower() == 'y':
-            notes = input('Введите текст примечания: ')
-            print('Карточка добавлена')
-            break
-        elif x[0].lower() == 'н' or x[0].lower() == 'n':
-            notes = None
-            print('Карточка добавлена')
-            break
-        else:
-            print('Введите одну из команд')
-    db.update({'notes': notes}, Search.name == item[0])
     if item[2][:9] == 'generate-':
         item[2] = generate(int(item[2][item[2].index('-') + 1:]))
-    return db.insert({'name': item[0], 'login': item[1], 'password': item[2], 'notes': notes})
+    if len(item) == 3:
+        print('Карточка добавлена')
+        return db.insert({'name': item[0], 'login': item[1], 'password': item[2], 'notes': None})
+    elif len(item) == 4:
+        return db.insert({'name': item[0], 'login': item[1], 'password': item[2], 'notes': item[3]})
+        print('Карточка добавлена')
 
 def removeitem(item):
     """Принимает строку и удаляет элемент с подходящими входными данными"""
