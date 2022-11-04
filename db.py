@@ -1,4 +1,5 @@
 import bcrypt
+import datetime
 from crypt import generate
 from tinydb import TinyDB, Query
 from prettytable import PrettyTable
@@ -33,7 +34,7 @@ def showmpass():
 def asciiview():
     """Вывод всех эементов БД в табличном виде"""
     view = PrettyTable()
-    view.field_names = ['Название', 'Логин', 'Пароль', 'Примечание']
+    view.field_names = ['Название', 'Логин', 'Пароль', 'Примечание', 'Дата добавления', 'Дата изменения']
     for i in db:
         view.add_row(list(i.values()))
     print(view)
@@ -41,13 +42,17 @@ def asciiview():
 def additem(item):
     """Принимает строку с данными и вносит новый элемент в БД"""
     item = item.split()
+    now = datetime.datetime.now()
+
     if item[2][:9] == 'generate-':
         item[2] = generate(int(item[2][item[2].index('-') + 1:]))
     if len(item) == 3:
         print('Карточка добавлена')
-        return db.insert({'name': item[0], 'login': item[1], 'password': item[2], 'notes': None})
+        return db.insert({'name': item[0], 'login': item[1], 'password': item[2], 'notes': None,
+                          'adddate': now.strftime("%d-%m-%Y %H:%M"), 'changedate': now.strftime("%d-%m-%Y %H:%M")})
     elif len(item) == 4:
-        return db.insert({'name': item[0], 'login': item[1], 'password': item[2], 'notes': item[3]})
+        return db.insert({'name': item[0], 'login': item[1], 'password': item[2], 'notes': item[3],
+                          'adddate': now.strftime("%d-%m-%Y %H:%M"), 'changedate': now.strftime("%d-%m-%Y %H:%M")})
         print('Карточка добавлена')
 
 def removeitem(item):
